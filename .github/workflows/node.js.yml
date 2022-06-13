@@ -36,7 +36,7 @@ jobs:
             tar -czvf ../viusasa.tar.gz ./
             cd ..
             cd ..
-            sudo sshpass -p ${{ secrets.SSH_PASS }} scp -v -o StrictHostKeyChecking=no -r viusasa.tar.gz ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:21 /abc/
+            sudo sshpass -p ${{ secrets.SSH_PASS }} scp -v -o StrictHostKeyChecking=no -r viusasa.tar.gz ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:21 /
       
       - name: Uncompress new Files
         run : sudo sshpass -p ${{ secrets.SSH_PASS }} -v ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:21 'cd /abc/ && tar -xzvf viusasa.tar.gz && rm viusasa.tar.gz'
