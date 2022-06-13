@@ -29,3 +29,14 @@ jobs:
           GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }} # This is provided by GitHub.
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: dist # The folder the action should deploy.
+
+      - name: Compress and Copy New Files to server
+        run : |
+            cd dist/
+            tar -czvf ../viusasa.tar.gz ./
+            cd ..
+            cd ..
+            sudo sshpass -p ${{ secrets.SSH_PASS }} scp -v -o StrictHostKeyChecking=no -r viusasa.tar.gz ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/abc
+      
+      - name: Uncompress new Files
+        run : sudo sshpass -p ${{ secrets.SSH_PASS }} -v ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'cd /abc/ && tar -xzvf viusasa.tar.gz && rm viusasa.tar.gz'
